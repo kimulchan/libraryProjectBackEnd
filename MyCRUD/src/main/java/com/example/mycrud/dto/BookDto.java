@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class BookDto {
-    String name;
+    String bookName;
     Integer libraryId;
 }
