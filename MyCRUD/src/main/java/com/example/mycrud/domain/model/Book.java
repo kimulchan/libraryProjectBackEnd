@@ -1,5 +1,6 @@
 package com.example.mycrud.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,15 +15,17 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Data
 @Entity
+//@JsonIgnoreProperties({"library"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @Column(length = 30,nullable = false)
+    private String bookname;
 
     @JoinColumn(name = "libraryId")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Library library;
 
     @CreationTimestamp

@@ -3,6 +3,7 @@ package com.example.mycrud.service;
 import com.example.mycrud.domain.model.Book;
 import com.example.mycrud.dto.BookDto;
 import com.example.mycrud.dto.BookResponseDto;
+import com.example.mycrud.dto.ModifyBookDto;
 import com.example.mycrud.repository.BookRepository;
 import com.example.mycrud.repository.LibraryRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-/*
+
     public List<Book> show(Integer id) {
         List<Book> books = libraryRepository.findById(id)
-                .map(x->bookRepository.findByLibrary(x))
-                .orElseThrow(() -> new IllegalArgument  Exception("해당 도서관이 존재하지 않습니다."));
+                .map(bookRepository::findByLibrary)
+                .orElseThrow(()->new IllegalArgumentException(("해당 도서관은 존재하지 않음")));
         return books;
     }
 
@@ -45,13 +46,18 @@ public class BookService {
                 .collect(Collectors.toList());
         return book;
     }
-*/
+    public Book bookModify (ModifyBookDto modifyBookDto){
+        Book book=bookRepository.findById(modifyBookDto.getBookId()).orElseThrow(()->new IllegalArgumentException("해당 책이 존재하지 않습니다"));
+        book.setLibrary(libraryRepository.getById(modifyBookDto.getLibId()));
 
-    public List<Book> bookIdFind(Integer id) {
-        List<Book> books = libraryRepository.findById(id)
-                .map(bookRepository::findByLibrary)
-                .orElseThrow(() -> new IllegalArgumentException("해당 도서관이 존재하지 않습니다."));
-        return books;
+        return book;
     }
+
+//    public List<Book> bookIdFind(Integer id) {
+//        List<Book> books = libraryRepository.findById(id)
+//                .map(bookRepository::findByLibrary)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 도서관이 존재하지 않습니다."));
+//        return books;
+//    }
 
 }
