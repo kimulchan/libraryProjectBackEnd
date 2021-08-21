@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 public class Library {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Integer id;
 
     @Column(length = 30,nullable = false)
     private String libraryName;
